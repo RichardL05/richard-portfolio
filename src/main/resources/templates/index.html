@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${name} + ' | ' + ${title}">Richard | DevOps Engineer</title>
+    <meta name="description" th:content="${bio}" content="Richard, DevOps Engineer with 2 years of experience. AWS EC2, Docker, Jenkins and hands-on infrastructure projects.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" href="#top" th:text="${name}">Richard</a>
+    <nav aria-label="Main">
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact" th:if="${hasContact}">Contact</a>
+    </nav>
+</header>
+<main id="top">
+    <section class="hero">
+        <div class="hero-text">
+            <p class="eyebrow" th:text="${title}">DevOps Engineer</p>
+            <h1 th:text="${name}">Richard</h1>
+            <p class="lede">Cloud infrastructure. Automated deployments. Hands-on engineering.</p>
+            <p class="sub" th:text="${bio}">I am a DevOps Engineer with 2 years of experience. My hands-on work includes AWS EC2, Linux, Docker and Jenkins, with Kubernetes as the next step in my deployment workflow.</p>
+            <div class="actions">
+                <a class="btn primary" href="#projects">Explore my projects</a>
+                <a class="btn" href="#experience">My experience</a>
+            </div>
+        </div>
+        <aside class="pod-panel" aria-labelledby="pod-title">
+            <h2 id="pod-title">Behind this page</h2>
+            <dl>
+                <div><dt>Instance</dt><dd id="pod" th:text="${podName}">local instance</dd></div>
+                <div><dt>Node</dt><dd id="node" th:text="${nodeName}">local machine</dd></div>
+                <div><dt>Version</dt><dd id="version" th:text="${version}">1.0.0</dd></div>
+            </dl>
+            <button type="button" id="refresh-pod" class="btn small">Ask again</button>
+            <p class="hint" id="pod-hint" aria-live="polite">On Kubernetes, this panel identifies the Pod and node answering your request.</p>
+        </aside>
+    </section>
+    <section id="skills" class="block">
+        <h2>Tools I work with</h2>
+        <ul class="courses">
+            <li><h3>AWS EC2 &amp; Linux</h3><p>Ubuntu servers, SSH connectivity, security groups and service management.</p></li>
+            <li><h3>Docker</h3><p>Running application containers, mapping ports, inspecting logs and managing container lifecycles.</p></li>
+            <li><h3>Jenkins</h3><p>Controller-agent connectivity, remote job execution and Docker deployment automation.</p></li>
+            <li><h3>Kubernetes practice</h3><p>Learning kubeadm, containerd, Calico, namespaces, Deployments and Services.</p></li>
+        </ul>
+    </section>
+    <section id="experience" class="block">
+        <h2>Experience</h2>
+        <ol class="timeline">
+            <li>
+                <span class="when" th:text="${experience} + ' of experience'">2 years of experience</span>
+                <h3 th:text="${title}">DevOps Engineer</h3>
+                <p>Working with cloud infrastructure and deployment tooling, supported by practical projects in Linux, Docker and Jenkins.</p>
+            </li>
+            <li>
+                <span class="when">Current learning</span>
+                <h3>Kubernetes application delivery</h3>
+                <p>Extending container deployment practice into cluster networking, namespaced workloads and application Services.</p>
+            </li>
+        </ol>
+    </section>
+    <section id="projects" class="block">
+        <h2>Projects I have worked on</h2>
+        <ul class="projects">
+            <li>
+                <span class="project-status">Completed hands-on lab</span>
+                <h3>Jenkins Controller-Agent Deployment on AWS</h3>
+                <p>Configured Jenkins across two Ubuntu EC2 instances, connected the agent over SSH and ran a Freestyle job on the agent to deploy an Nginx Docker container. Verified remote job execution and browser access to the application.</p>
+                <p class="project-stack">AWS EC2 / Ubuntu / Jenkins / SSH / Docker / Nginx</p>
+            </li>
+            <li>
+                <span class="project-status">Completed hands-on lab</span>
+                <h3>Docker Services Lab on Ubuntu EC2</h3>
+                <p>Ran Jenkins, Prometheus, SonarQube and Nginx as separate containers on an Ubuntu EC2 host. Practiced port mapping, container inspection and lifecycle commands, and verified the Jenkins interface in a browser.</p>
+                <p class="project-stack">Docker / Linux / Jenkins / Prometheus / SonarQube / Nginx</p>
+            </li>
+            <li>
+                <span class="project-status current">Current project</span>
+                <h3>My Containerized DevOps Portfolio</h3>
+                <p>This Spring Boot portfolio brings my profile and project work into one application, with a Docker image definition, Jenkins pipeline and Kubernetes manifests for the richard namespace. Cluster deployment is the next step.</p>
+                <p class="project-stack">Java / Spring Boot / Maven / Docker / Jenkins / Kubernetes</p>
+            </li>
+        </ul>
+    </section>
+    <section id="contact" class="block contact" th:if="${hasContact}">
+        <h2>Let's connect</h2>
+        <p>Get in touch to discuss DevOps projects and opportunities.</p>
+        <ul class="contact-list">
+            <li th:if="${!#strings.isEmpty(email)}"><span>Email</span> <a th:href="'mailto:' + ${email}" th:text="${email}">Email</a></li>
+            <li th:if="${!#strings.isEmpty(phone)}"><span>Phone</span> <a th:href="'tel:' + ${#strings.replace(phone, ' ', '')}" th:text="${phone}">Phone</a></li>
+            <li th:if="${!#strings.isEmpty(linkedin)}"><span>LinkedIn</span> <a th:href="${linkedin}" rel="noopener noreferrer" target="_blank">View profile</a></li>
+            <li th:if="${!#strings.isEmpty(github)}"><span>GitHub</span> <a th:href="${github}" rel="noopener noreferrer" target="_blank">View repositories</a></li>
+        </ul>
+    </section>
+</main>
+<footer class="foot">
+    <p>&copy; 2026 <span th:text="${name}">Richard</span>. <span th:text="${title}">DevOps Engineer</span>.</p>
+</footer>
+<script>
+(function () {
+    var btn = document.getElementById('refresh-pod');
+    var hint = document.getElementById('pod-hint');
+    var podEl = document.getElementById('pod');
+    var nodeEl = document.getElementById('node');
+    var verEl = document.getElementById('version');
+    btn.addEventListener('click', function () {
+        var before = podEl.textContent;
+        btn.disabled = true;
+        fetch('/api/info', { cache: 'no-store' })
+            .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+            .then(function (d) {
+                podEl.textContent = d.pod;
+                nodeEl.textContent = d.node;
+                verEl.textContent = d.version;
+                var changed = d.pod !== before;
+                podEl.classList.remove('flash'); void podEl.offsetWidth;
+                if (changed) podEl.classList.add('flash');
+                hint.textContent = changed
+                    ? 'A different instance answered this time.'
+                    : 'The same instance answered. New requests can reach the same replica.';
+            })
+            .catch(function () { hint.textContent = 'Unable to refresh instance information. Please try again.'; })
+            .finally(function () { btn.disabled = false; });
+    });
+})();
+</script>
+</body>
+</html>
